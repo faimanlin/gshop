@@ -45,9 +45,9 @@ export default new VueRouter({
     meta: {
       showFooter: true
     }
-  }]
+  }],
   // 路由跳转页面后.设置顶部展示
-  // scrollBehavior (to, from, savedPosition) {
-  //   return { x: 0, y: 0 }
-  // }
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })

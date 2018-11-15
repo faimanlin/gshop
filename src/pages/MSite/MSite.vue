@@ -2,12 +2,13 @@
   <section class="msite">
     <!--首页头部-->
    <HeaderTop :title="address.name">
-      <span class="header_search" slot="left">
+      <router-link class="header_search" slot="left" to="/search">
         <i class="iconfont icon-sousuo"></i>
-      </span>
-      <span class="header_login" slot="right">
-        <span class="header_login_text">登录|注册</span>
-      </span>
+      </router-link>
+      <router-link class="header_login" slot="right" :to="userInfo._id? '/userinfo': '/login'">
+        <span class="header_login_text" v-show="!userInfo._id">登录|注册</span>
+        <i class="iconfont icon-person" v-show="userInfo._id"></i>
+      </router-link>
    </HeaderTop>
     <!--首页导航-->
     <nav class="msite_nav">
@@ -55,7 +56,7 @@ export default {
     this.$store.dispatch('getShops')
   },
   computed: {
-    ...mapState(['address', 'categorys', 'shops']),
+    ...mapState(['address', 'categorys', 'shops','userInfo']),
     // 根据categorys 一位数据生成一个二维数组,小数组中的元素个数最大是8
     categorysArr () {
       // const {categorys} = this

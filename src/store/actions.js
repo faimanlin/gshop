@@ -4,12 +4,16 @@
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
-  RECEIVE_SHOPS
+  RECEIVE_SHOPS,
+  RECEIVE_USER_INFO,
+  REST_USER_INFO
 } from './mutations-types'
 import {
   reqAddress,
   reqFoodCategorys,
-  reqShops
+  reqShops,
+  reqUserInfo,
+  reqLogout
 } from '../api'
 
 export default {
@@ -45,6 +49,31 @@ export default {
     if (result.code === 0) {
       const shops = result.data
       commit(RECEIVE_SHOPS, {shops})
+    }
+  },
+  // 同步记录用户信息
+  recordUser ({commit}, userInfo) {
+    console.log(userInfo)
+    commit(RECEIVE_USER_INFO, {userInfo})
+  },
+  // 异步获取商家列表
+  async getUserInfo ({commit, state}) {
+    // 发送异步ajax请求
+    const result = await reqUserInfo()
+    // 提交一个mutation
+    if (result.code === 0) {
+      const userInfo = result.data
+      commit(RECEIVE_USER_INFO, {userInfo})
+    }
+  },
+
+  // 异步退出
+  async logout ({commit, state}) {
+    // 发送异步ajax请求
+    const result = await reqLogout()
+    // 提交一个mutation
+    if (result.code === 0) {
+      commit(REST_USER_INFO)
     }
   }
 }
