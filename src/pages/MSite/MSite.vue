@@ -56,7 +56,7 @@ export default {
     this.$store.dispatch('getShops')
   },
   computed: {
-    ...mapState(['address', 'categorys', 'shops','userInfo']),
+    ...mapState(['address', 'categorys', 'shops', 'userInfo']),
     // 根据categorys 一位数据生成一个二维数组,小数组中的元素个数最大是8
     categorysArr () {
       // const {categorys} = this

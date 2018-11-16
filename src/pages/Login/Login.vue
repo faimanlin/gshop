@@ -98,7 +98,7 @@ export default {
         }, 1000)
         // 发送ajax请求(向指定手机号发送验证码短信)
         const result = await reqSendCode(this.phone)
-        if (result.code === 1){
+        if (result.code === 1) {
           // 显示提示
           this.showAlert('短信验证码发送失败')
           // 停止倒计时
