@@ -9,7 +9,9 @@ import {
   REST_USER_INFO,
   RECEIVE_GOODS,
   RECEIVE_RATINGS,
-  RECEIVE_INFO
+  RECEIVE_INFO,
+  DECREMENT_FOOD_COUNT,
+  INCREMENT_FOOD_COUNT
 } from './mutations-types'
 import {
   reqAddress,
@@ -83,13 +85,15 @@ export default {
     }
   },
   // 异步获取商品
-  async getShopGoods ({commit}) {
+  async getShopGoods ({commit}, callback) {
     // 发送异步ajax请求
     const result = await reqShopGoods()
     // 提交一个mutation
     if (result.code === 0) {
       const goods = result.data
       commit(RECEIVE_GOODS, {goods})
+      // 数据更新了,通知一下组件
+      callback && callback()
     }
   },
   // 异步获评价
@@ -110,6 +114,14 @@ export default {
     if (result.code === 0) {
       const info = result.data
       commit(RECEIVE_INFO, {info})
+    }
+  },
+  // 同步更新food中的count值
+  updateFoodCount ({commit}, {isAdd, food}) {
+    if (isAdd) {
+      commit(INCREMENT_FOOD_COUNT, {food})
+    } else {
+      commit(DECREMENT_FOOD_COUNT, {food})
     }
   }
 }
